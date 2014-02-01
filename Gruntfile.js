@@ -1,6 +1,11 @@
+function negate(item) {
+	return '!' + item;
+}
 var cwd = 'app/';
-var staticFiles = ['*', '**/*', '!**/*.scss'];
+var jadeFiles = ['*.jade', '**/*.jade'];
 var sassFiles = ['styles/*.scss'];
+// take all files in working dir and one level down and concat the negations to jade and sass files
+var assetFiles = ['*', '**/*'].concat(jadeFiles.map(negate)).concat(sassFiles.map(negate));
 var devDir = 'build/dev/';
 var devPort = 8002;
 
@@ -15,7 +20,7 @@ module.exports = function(grunt) {
 				files: [{
 					expand: true,
 					cwd: cwd,
-					src: ['*', '**/*', '!**/*.scss'],
+					src: assetFiles,
 					dest: devDir
 				}]
 			}
@@ -27,6 +32,21 @@ module.exports = function(grunt) {
 					keepalive: true,
 					base: devDir
 				}
+			}
+		},
+		jade: {
+			dev: {
+				options: {
+					pretty: true,
+					client: false
+				},
+				files: [{
+					expand: true,
+					cwd: cwd,
+					src: jadeFiles,
+					dest: devDir,
+					ext: '.html'
+				}]
 			}
 		},
 		sass: {
@@ -45,9 +65,13 @@ module.exports = function(grunt) {
 				cwd: cwd,
 				spawn: true
 			},
-			staticfiles: {
-				files: staticFiles,
+			assets: {
+				files: assetFiles,
 				tasks: ['copy:dev']
+			},
+			jade: {
+				files: jadeFiles,
+				tasks: ['jade:dev']
 			},
 			sass: {
 				files: sassFiles,
@@ -55,7 +79,7 @@ module.exports = function(grunt) {
 			}
 		},
 		concurrent: {
-			dev: ['connect:dev', 'watch:staticfiles', 'watch:sass']
+			dev: ['connect:dev', 'watch:assets', 'watch:sass', 'watch:jade']
 		}
 	});
 
@@ -64,8 +88,9 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-jade');
 	grunt.loadNpmTasks('grunt-concurrent');
 
-	grunt.registerTask('init:dev', ['clean:dev', 'copy:dev', 'sass:dev'])
+	grunt.registerTask('init:dev', ['clean:dev', 'copy:dev', 'sass:dev', 'jade:dev'])
 	grunt.registerTask('start:dev', ['init:dev', 'concurrent:dev']);
 };
