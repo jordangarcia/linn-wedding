@@ -2,8 +2,9 @@
 	"name": "linn-wedding",
 	"version": "0.1.0",
 	"description": "Wedding website for the Linn wedding",
-	"main": "start.js",
+	"main": "Gruntfile.js",
 	"scripts": {
+		"start": "grunt start:dev",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
