@@ -8,6 +8,14 @@ $navbar-height: 60px;
 $navbar-link-color: black;
 $container-width: 960px;
 
+p {
+	@include serif;
+	font-size: 1.6em;
+	line-height: 1.5em;
+	font-weight: 400;
+	letter-spacing: 1px;
+}
+
 .container {
 	position: relative;
 	width: $container-width;
@@ -46,7 +54,12 @@ $container-width: 960px;
 	}
 }
 
+section {
+	padding: 60px 0;
+}
+
 section.home {
+	padding: 0;
 	margin-top: $navbar-height;
 	.cover-photo {
 		@include border-box;
@@ -84,5 +97,11 @@ section.home {
 			}
 
 		}
+	}
+}
+
+section.about {
+	img {
+		width: 100%;
 	}
 }
