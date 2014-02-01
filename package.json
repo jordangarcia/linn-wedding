@@ -1,25 +1,28 @@
 {
-  "name": "linn-wedding",
-  "version": "0.0.1",
-  "description": "Wedding website for the Linn wedding",
-  "main": "start.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/jordangarcia/linn-wedding"
-  },
-  "author": "Jordan Garcia",
-  "license": "BSD-2-Clause",
-  "bugs": {
-    "url": "https://github.com/jordangarcia/linn-wedding/issues"
-  },
-  "homepage": "https://github.com/jordangarcia/linn-wedding",
-  "dependencies": {
-    "grunt": "~0.4.2",
-    "grunt-contrib-copy": "~0.5.0",
-    "grunt-contrib-connect": "~0.6.0",
-    "grunt-contrib-sass": "~0.7.1"
-  }
+	"name": "linn-wedding",
+	"version": "0.1.0",
+	"description": "Wedding website for the Linn wedding",
+	"main": "start.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/jordangarcia/linn-wedding"
+	},
+	"author": "Jordan Garcia",
+	"license": "BSD-2-Clause",
+	"bugs": {
+		"url": "https://github.com/jordangarcia/linn-wedding/issues"
+	},
+	"homepage": "https://github.com/jordangarcia/linn-wedding",
+	"dependencies": {
+		"grunt": "~0.4.2",
+		"grunt-contrib-copy": "~0.5.0",
+		"grunt-contrib-connect": "~0.6.0",
+		"grunt-contrib-sass": "~0.7.1",
+		"grunt-contrib-watch": "~0.5.3",
+		"grunt-concurrent": "~0.4.3",
+		"grunt-contrib-clean": "~0.5.0"
+	}
 }
