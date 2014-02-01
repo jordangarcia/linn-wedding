@@ -1,0 +1,44 @@
+@import '_reset.scss';
+
+@mixin box-shadow($shadows...) {
+	-moz-box-shadow: $shadows;
+	-webkit-box-shadow: $shadows;
+	box-shadow: $shadows;
+}
+
+@mixin sans-serif {
+	font-family: Helvetica Neueu;
+}
+@mixin serif {
+	font-family: Georgia;
+}
+
+/**
+ * Variables
+ */
+$navbar-width: 960px;
+
+.nav-bar {
+	@include box-shadow(1px 0px 15px #aaa);
+	background-color:  white;
+	position:          fixed;
+	top:               0;
+	left:              0;
+	right:             0;
+	position:          fixed;
+	z-index:           1000;
+
+	ul {
+		width: $navbar-width;
+		margin: 0 auto;
+
+		li {
+			padding: 20px 20px;
+			float: left;
+			a {
+				@include sans-serif;
+			}
+		}
+	}
+
+}
