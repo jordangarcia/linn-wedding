@@ -28,6 +28,7 @@ module.exports = function(grunt) {
 		connect: {
 			dev: {
 				options: {
+					hostname: '0.0.0.0',
 					port: devPort,
 					keepalive: true,
 					base: devDir
