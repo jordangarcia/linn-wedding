@@ -114,19 +114,11 @@ blockquote cite a,blockquote cite a:visited,blockquote cite a:visited {
     color: #555;
 }
 
-hr {
-    border: solid #ddd;
-    border-width: 1px 0 0;
-    clear: both;
-    margin: 10px 0 30px;
-    height: 0;
-}
-
 .container {
     position: relative;
     width: 960px;
     margin: 0 auto;
-    padding: 0;
+	padding: 30px 0;
 }
 
 .container .column,.container .columns {
@@ -502,4 +494,17 @@ hr {
     visibility: hidden;
     width: 0;
     height: 0;
+}
+
+.centered {
+	text-align: center;
+}
+
+hr {
+	width: 24%;
+	margin: 36px auto;
+
+	&.tight {
+		margin: 6px auto;
+	}
 }
