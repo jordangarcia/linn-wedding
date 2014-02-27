@@ -96,8 +96,8 @@ h3 {
 
 .cover-photo {
 	@include border-box;
-	width: 100%;
 	height: 100%;
+	height: 100vh;
 	min-height: 700px;
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
@@ -156,5 +156,28 @@ section.couple {
 section.venue {
 	&.cover-photo {
 		filter: greyscale(100%) blur(2px);
+	}
+}
+
+.subscribe-form {
+	padding: 10px;
+	background: black;
+	border-radius: 10px;
+
+	input[type="email"] {
+		font-size: 14px;
+		padding: 5px;
+		display: block;
+		overflow: hidden;
+	}
+	input[type="submit"] {
+		float: right;
+		width: 100px;
+		background: white;
+		border: none;
+	}
+
+	&:after {
+		@include clear-fix;
 	}
 }
