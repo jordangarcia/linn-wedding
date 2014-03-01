@@ -3,6 +3,11 @@ html(lang="en")
 	head
 		title= 'Jillian & Logan'
 		link(rel='stylesheet', href='/styles/main.css')
+		script(src='/bower_components/q/q.js')
+		script(src='/scripts/imagesloaded.js')
+		script.
+			var imagesLoaded = new ImagesLoaded('imageLoaded');
+
 	body
 		div.nav-bar
 			ul
@@ -27,17 +32,17 @@ html(lang="en")
 						| It's hard for us to express just how thankful we are to have such a wonderful and supportive group of family and friends behind us as we begin this new chapter. We're so lucky to have all of you in our lives. From our age-old friends from Roanoke, to our new California crew, to our family in Virginia, Michigan, New Jersey, New York, Ohio, the Carolinas, Florida, Boston, Seattle and beyond...we are so excited to bring everyone together for this very special day. (Logan is literally squealing with anticipation right now.) We can't wait to celebrate with you!
 					p
 						| - Jillian &amp; Logan
-					img(src='/img/ring.jpg', style='width: 100%')
+					img(src='/img/ring.jpg', style='width: 100%', onload='imageLoaded(this)')
 		section.couple#couple
 			div.container
 				div.sixteen.columns
 					h2.section-title The Couple
 				div.four.columns.offset-by-one
-					img(src='/img/couple1.jpg')
+					img(src='/img/couple1.jpg', onload='imageLoaded(this)')
 				div.six.columns
-					img(src='/img/couple2.jpg')
+					img(src='/img/couple2.jpg', onload='imageLoaded(this)')
 				div.four.columns
-					img(src='/img/couple3.jpg')
+					img(src='/img/couple3.jpg', onload='imageLoaded(this)')
 			div.container
 				div.fourteen.columns.offset-by-one.centered
 					h3 Jillian & Logan
@@ -47,13 +52,13 @@ html(lang="en")
 		section.venue#venue
 			div.container
 				div.sixteen.columns
-					img.pic-frame(src='/img/university_club_front.jpg', style='width: 100%; margin-bottom: 60px;')
+					img.pic-frame(src='/img/university_club_front.jpg', style='width: 100%; margin-bottom: 60px;', onload='imageLoaded(this)')
 					h2.section-title The University Club of San Francisco
 				div.six.columns
-					img.pic-frame(src='/img/university_club.jpg', style='width:100%')
+					img.pic-frame(src='/img/university_club.jpg', style='width:100%', onload='imageLoaded(this)')
 					//-img.pic-frame(src='/img/logan_jillian_sf.jpg', style='width: 100%; margin-bottom: 60px;')
-					img.pic-frame(src='/img/club1.jpg', style='width:100%')
-					img.pic-frame(src='/img/club2.jpg', style='width:100%')
+					img.pic-frame(src='/img/club1.jpg', style='width:100%', onload='imageLoaded(this)')
+					img.pic-frame(src='/img/club2.jpg', style='width:100%', onload='imageLoaded(this)')
 				div.nine.columns.offset-by-one
 					p The University Club is located on Nob Hill. This private club is one of the oldest in the city and 2009 marked 100 years in the present location at 800 Powell Street.
 					p Dance the night away against a breathtaking view of sparkling city lights. Raise your glasses in the "Black Cat Bar," while admiring memorabilia from the former San Francisco Press Club. Take a moment to relax and reflect in the Library, a gracious room with a working fireplace and over 3,000 books.
@@ -88,17 +93,11 @@ html(lang="en")
 						input(type='text', name='b_e19cf1ba682140c2796b60122_89d06e7e1c', value='', style='position: absolute; left: -5000px;')
 						input(type='submit', value='Subscribe')
 
-	script(type='text/javascript').
-		var images = Array.prototype.slice.call(document.querySelectorAll('img'), 0);
-		var len = images.length;
-		var count = 0;
-		images.forEach(function(el) {
-			el.onload = function() {
-				if (++count === len) {
-					slideScroll('section', {
-						linkClass: '.scroll-link',
-					});
-				}
-			}
-		});
 	script(src='/scripts/slidescroll.js')
+
+	script(type='text/javascript').
+		imagesLoaded.then(function() {
+			slideScroll('section', {
+				linkSelector: '.scroll-link'
+			});
+		});
