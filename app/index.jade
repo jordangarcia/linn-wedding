@@ -7,13 +7,13 @@ html(lang="en")
 		div.nav-bar
 			ul
 				li
-					a(href='#couple') The Couple
+					a(href='#couple', class='scroll-link') The Couple
 				li
-					a(href='#venue') The Venue
+					a(href='#venue', class='scroll-link') The Venue
 				li
-					a(href='#travel') Travel
+					a(href='#travel', class='scroll-link') Travel
 				li
-					a(href='#subscribe') Stay Updated
+					a(href='#subscribe', class='scroll-link') Stay Updated
 		section.home
 			div.cover-photo(style='background-image: url(/img/cover.jpg)')
 				div.container
@@ -94,11 +94,10 @@ html(lang="en")
 		var count = 0;
 		images.forEach(function(el) {
 			el.onload = function() {
-				
-				console.log('image %d of %d loaded', count, len);
-
 				if (++count === len) {
-					slideScroll('section');
+					slideScroll('section', {
+						linkClass: '.scroll-link',
+					});
 				}
 			}
 		});

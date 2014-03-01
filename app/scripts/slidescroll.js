@@ -10,7 +10,8 @@
 		el.style.webkitTransform = 'translateY(' + val + 'px)';
 	}
 
-	function slideScroll(selector) {
+	function slideScroll(selector, opts) {
+		opts = opts || {};
 		var offset         = 0;
 		var zIndex         = 1000;
 		var viewportHeight = window.innerHeight;
@@ -67,11 +68,23 @@
 			var next;
 			var translateY;
 
+			//console.log(scrollY, currentSection.id);
+			$translateY(currentSection, 0);
 			if (ind < sections.length - 1) {
 				translateY = currentSection.getAttribute(OFFSET_END) - scrollY;
 				$translateY(sections[ind+1], -translateY);
 			}
 		});
+
+		if (opts.linkSelector) {
+			Array.prototype.slice.call($qsa(opts.linkSelector)).forEach(function(node) {
+				node.addEventListener('click', function(event) {
+					sections.forEach(function(node) {
+						$translateY(node, 0);
+					});
+				});
+			});
+		}
 	}
 
 	window[pluginName] = slideScroll;
