@@ -3,10 +3,7 @@ html(lang="en")
 	head
 		title= 'Jillian & Logan'
 		link(rel='stylesheet', href='/styles/main.css')
-		script(src='/bower_components/q/q.js')
-		script(src='/scripts/imagesloaded.js')
-		script.
-			var imagesLoaded = new ImagesLoaded('imageLoaded');
+		script(src='/scripts/main.js')
 
 	body
 		div.nav-bar
@@ -92,12 +89,3 @@ html(lang="en")
 						input(type='email', name='EMAIL')
 						input(type='text', name='b_e19cf1ba682140c2796b60122_89d06e7e1c', value='', style='position: absolute; left: -5000px;')
 						input(type='submit', value='Subscribe')
-
-	script(src='/scripts/slidescroll.js')
-
-	script(type='text/javascript').
-		imagesLoaded.then(function() {
-			slideScroll('section', {
-				linkSelector: '.scroll-link'
-			});
-		});
