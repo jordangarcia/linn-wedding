@@ -6,7 +6,6 @@ html(lang="en")
 		script(src='/scripts/main.js')
 
 	body
-		img(src='#', class='watch-image')
 		div.nav-bar
 			ul
 				li
@@ -85,8 +84,9 @@ html(lang="en")
 		section.subscribe#subscribe
 			div.container
 				div.sixteen.columns
-					h2.section-title Stay Updated
 					form.subscribe-form(action='http://jillianandlogan.us3.list-manage1.com/subscribe/post?u=e19cf1ba682140c2796b60122&amp;id=89d06e7e1c', method='post', target='_blank')
-						input(type='email', name='EMAIL')
+						h2.section-title Stay Up To Date
+						label We will email you as important wedding details emerge!
+						input(type='email', name='EMAIL', placeholder='So enter your email here!')
 						input(type='text', name='b_e19cf1ba682140c2796b60122_89d06e7e1c', value='', style='position: absolute; left: -5000px;')
 						input(type='submit', value='Subscribe')

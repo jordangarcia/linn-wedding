@@ -12,6 +12,10 @@
 @mixin text-shadow($shadow...) {
 	text-shadow: $shadow;
 }
+@mixin transition($transition...) {
+	transition: $transition;
+	-webkit-transition: $transition;
+}
 @mixin clear-fix {
 	content: "\0020";
 	display: block;
