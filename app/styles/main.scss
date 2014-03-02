@@ -63,7 +63,6 @@ h3 {
 .nav-bar {
 	@include box-shadow(1px 0px 15px #aaa);
 	background-color:  white;
-	background:        rgba(255, 255, 255, .85);
 	position:          fixed;
 	top:               0;
 	left:              0;
