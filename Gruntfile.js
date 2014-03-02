@@ -4,9 +4,12 @@ function negate(item) {
 var cwd = 'app/';
 var jadeFiles = ['*.jade', '**/*.jade'];
 var sassFiles = ['styles/*.scss', 'styles/**/*.scss'];
-var scriptFiles = ['scripts/*.js'];
+var scriptFiles = ['scripts/*.js', 'scripts/**/*.js'];
 // take all files in working dir and one level down and concat the negations to jade and sass files
-var assetFiles = ['*', '**/*'].concat(jadeFiles.map(negate)).concat(sassFiles.map(negate)).concat(scriptFiles.map(negate));
+var assetFiles = ['*', '**/*']
+	.concat(jadeFiles.map(negate))
+	.concat(sassFiles.map(negate))
+	.concat(scriptFiles.map(negate));
 var devDir = 'build/dev/';
 var devPort = 8002;
 
