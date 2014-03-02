@@ -31,12 +31,22 @@ function bindImgListener(node) {
 }
 
 module.exports = function imagesLoaded(selector) {
-	var deferredImages = [];
+	var deferred = Q.defer();
+	var resolve = function() {
+		deferred.resolve();
+	};
+	var reject = function() {
+		deferred.reject();
+	};
+
 	document.addEventListener('DOMContentLoaded', function(event) {
+		var deferredImages = [];
 		Array.prototype.forEach.call($QSA(selector), function(node) {
 			deferredImages.push(bindImgListener(node));
 		});
+		// when all images are resolved, resolve the promise
+		Q.all(deferredImages).then(resolve, reject);
 	});
 
-	return Q.all(deferredImages);
+	return deferred.promise;
 };
