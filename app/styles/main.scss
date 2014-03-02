@@ -90,6 +90,8 @@ h3 {
 			height: $navbar-height;
 			padding: 20px 20px;
 			float: left;
+			width: 25%;
+			text-align: center;
 
 			a {
 				font-size: 18px;
@@ -98,6 +100,10 @@ h3 {
 				@include sans-serif;
 			}
 		}
+	}
+
+	@media screen and (max-width: 479px) {
+		display: none;
 	}
 }
 
