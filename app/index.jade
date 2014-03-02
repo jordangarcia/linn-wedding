@@ -2,6 +2,7 @@ doctype html
 html(lang="en")
 	head
 		title= 'Jillian & Logan'
+		meta(name='viewport', content='width=device-width, user-scalable=no')
 		link(rel='stylesheet', href='/styles/main.css')
 		script(src='/scripts/main.js')
 		link(rel='shortcut icon', href='/img/favicon.png')
@@ -21,7 +22,7 @@ html(lang="en")
 			div.cover-photo(style='background-image: url(/img/cover.jpg)')
 				div.container
 					hr
-					h1 Jillian &amp; Logan
+					h1 Jillian <span class="ampersand">&amp;</span> Logan
 					hr
 					h3 September 20, 2014
 			div.container
@@ -130,11 +131,11 @@ html(lang="en")
 				div.sixteen.columns
 					form.subscribe-form(action='http://jillianandlogan.us3.list-manage1.com/subscribe/post?u=e19cf1ba682140c2796b60122&amp;id=89d06e7e1c', method='post', target='_blank')
 						h2.section-title Stay Up To Date
-						p.
+						p.centered.
 							We're working hard to make sure you have all the information you
 							need. To stay updated on the schedule of events, gift registry
 							information, our guide to the city and more, please enter your
 							email address below.
 						input(type='email', name='EMAIL', placeholder='Your email address')
 						input(type='text', name='b_e19cf1ba682140c2796b60122_89d06e7e1c', value='', style='position: absolute; left: -5000px;')
-						input(type='submit', value='Subscribe')
+						input(type='submit', value='Subscribe', class='btn')
