@@ -84,7 +84,6 @@ h3 {
 		width: $screen-lg-min;
 		margin: 0 auto;
 
-
 		li {
 			@include border-box;
 			height: $navbar-height;
@@ -100,10 +99,32 @@ h3 {
 				@include sans-serif;
 			}
 		}
-	}
 
-	@media screen and (max-width: 479px) {
-		display: none;
+		@media only screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+			width: $screen-md-min;
+		}
+
+		@media only screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+			width: $screen-sm-min;
+
+			li {
+				padding: 20px 0px;
+				a {
+					font-size: 16px;
+				}
+			}
+		}
+
+		@media only screen and (max-width: $screen-xs-max) {
+			width: $screen-xs-min;
+
+			li {
+				padding: 14px 0px;
+				a {
+					font-size: 14px;
+				}
+			}
+		}
 	}
 }
 
