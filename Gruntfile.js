@@ -166,7 +166,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-shell');
 
 	grunt.registerTask('init:dev', ['clean:dev', 'copy:dev', 'sass:dev', 'jade:dev', 'browserify:dev']);
-	grunt.registerTask('init:prod', ['clean:prod', 'copy:prod', 'sass:prod', 'jade:prod'/*, 'browserify:prod'*/]);
+	grunt.registerTask('init:prod', ['clean:prod', 'copy:prod', 'sass:prod', 'jade:prod', 'browserify:prod']);
 	grunt.registerTask('start:dev', ['init:dev', 'concurrent:dev']);
 	grunt.registerTask('start:prod', ['connect:prod']);
 
