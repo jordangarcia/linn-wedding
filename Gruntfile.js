@@ -160,4 +160,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('init:prod', ['clean:prod', 'copy:prod', 'sass:prod', 'jade:prod', 'browserify:prod']);
 	grunt.registerTask('start:dev', ['init:dev', 'concurrent:dev']);
 	grunt.registerTask('start:prod', ['connect:prod']);
+
+	grunt.registerTask('heroku', ['init:prod']);
 };
