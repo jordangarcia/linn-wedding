@@ -25,6 +25,9 @@
 .container:after {
 	@include clear-fix;
 }
+.clear-fix {
+	@include clear-fix;
+}
 
 @media only screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) {
 	.container {

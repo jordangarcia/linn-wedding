@@ -9,6 +9,9 @@
 @mixin border-box {
 	box-sizing: border-box;
 }
+@mixin border-radius($radius) {
+	border-radius: $radius;
+}
 @mixin text-shadow($shadow...) {
 	text-shadow: $shadow;
 }
