@@ -63,7 +63,10 @@ module.exports = function(grunt) {
 		},
 		shell: {
 			bower_install: {
-				command: './node_modules/bower/bin/bower install'
+				options: {
+					stdout: true
+				},
+				command: './node_modules/bower/bin/bower install --allow-root'
 			}
 		},
 		browserify: {
