@@ -10,11 +10,11 @@
  */
 .container {
 	position: relative;
-	width: $screen-md-min;
+	width: $screen-lg-min;
 	margin: 0 auto;
 	padding: 30px 0;
 
-	@include grid($screen-md-min, 16)
+	@include grid($screen-lg-min, 16)
 }
 
 .row {
@@ -24,6 +24,13 @@
 
 .container:after {
 	@include clear-fix;
+}
+
+@media only screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+	.container {
+		width: $screen-md-min;
+		@include grid($screen-md-min, 16);
+	}
 }
 
 @media only screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {

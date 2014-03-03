@@ -4,7 +4,6 @@
  * Variables
  */
 $bg-color: white;
-$navbar-width: 960px;
 $navbar-height: 60px;
 $navbar-link-color: black;
 
@@ -21,7 +20,7 @@ $navbar-link-color: black;
 	font-weight: 400;
 	letter-spacing: 1px;
 
-	@media screen and (max-width: $screen-sm-max) {
+	@media screen and (max-width: $screen-md-max) {
 		font-size: 1em;
 		letter-spacing: 0;
 	}
@@ -46,7 +45,7 @@ hr {
 	&.tight {
 		margin: 6px auto;
 	}
-	@media screen and (max-width: $screen-sm-max) {
+	@media screen and (max-width: $screen-md-max) {
 		width: 75%;
 	}
 }
@@ -60,7 +59,7 @@ hr {
 	text-transform: uppercase;
 	text-align: center;
 
-	@media screen and (max-width: $screen-sm-max) {
+	@media screen and (max-width: $screen-md-max) {
 		font-size: 2em;
 		letter-spacing: .2em;
 	}
@@ -82,8 +81,9 @@ h3 {
 	z-index:           1000;
 
 	ul {
-		width: $navbar-width;
+		width: $screen-lg-min;
 		margin: 0 auto;
+
 
 		li {
 			@include border-box;
@@ -125,7 +125,7 @@ h3 {
 	background-size: cover;
 	padding-top: 80px;
 
-	@media screen and (max-width: $screen-sm-max) {
+	@media screen and (max-width: $screen-md-max) {
 		min-height: 600px;
 	}
 
@@ -142,7 +142,7 @@ h3 {
 			text-transform: uppercase;
 
 			.ampersand {
-				@media screen and (max-width: $screen-sm-max) {
+				@media screen and (max-width: $screen-md-max) {
 					display: block;
 				}
 			}
@@ -212,7 +212,7 @@ section.subscribe {
 		padding-bottom: 1em;
 	}
 
-	@media screen and (max-width: $screen-sm-max) {
+	@media screen and (max-width: $screen-md-max) {
 		margin-top: 0;
 		padding: 20px 15px;
 
@@ -231,7 +231,7 @@ section.subscribe {
 		float: left;
 		border-width: 2px;
 		@include border-box;
-		@media screen and (max-width: $screen-sm-max) {
+		@media screen and (max-width: $screen-md-max) {
 			margin: 1em 0;
 			float: none;
 			display: block;
@@ -254,7 +254,7 @@ section.subscribe {
 		border-radius: 4px;
 		transition: .5s;
 
-		@media screen and (max-width: $screen-sm-max) {
+		@media screen and (max-width: $screen-md-max) {
 			float: none;
 			display: block;
 			width: 100%;
