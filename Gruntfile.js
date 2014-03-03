@@ -14,6 +14,7 @@ var devDir = 'build/dev/';
 var devPort = 8002;
 
 var prodDir = 'build/prod/';
+var prodPort = 3000;
 
 var MAIN_SCRIPT = 'app/scripts/main.js';
 
@@ -22,6 +23,7 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		clean: {
 			dev: [devDir],
+			prod: [prodDir],
 		},
 		copy: {
 			dev: {
@@ -30,6 +32,14 @@ module.exports = function(grunt) {
 					cwd: cwd,
 					src: assetFiles,
 					dest: devDir
+				}]
+			},
+			prod: {
+				files: [{
+					expand: true,
+					cwd: cwd,
+					src: assetFiles,
+					dest: prodDir
 				}]
 			}
 		},
@@ -41,6 +51,14 @@ module.exports = function(grunt) {
 					keepalive: true,
 					base: devDir
 				}
+			},
+			prod: {
+				options: {
+					hostname: '0.0.0.0',
+					port: process.env['PORT'] || prodPort,
+					keepalive: true,
+					base: prodDir
+				}
 			}
 		},
 		browserify: {
@@ -51,7 +69,7 @@ module.exports = function(grunt) {
 			prod: {
 				src: MAIN_SCRIPT,
 				dest: prodDir + 'scripts/main.js'
-			},
+			}
 		},
 		jade: {
 			dev: {
@@ -66,6 +84,19 @@ module.exports = function(grunt) {
 					dest: devDir,
 					ext: '.html'
 				}]
+			},
+			prod: {
+				options: {
+					pretty: true,
+					client: false
+				},
+				files: [{
+					expand: true,
+					cwd: cwd,
+					src: jadeFiles,
+					dest: prodDir,
+					ext: '.html'
+				}]
 			}
 		},
 		sass: {
@@ -75,6 +106,16 @@ module.exports = function(grunt) {
 					cwd: cwd,
 					src: sassFiles,
 					dest: devDir,
+					ext: '.css'
+				}]
+			},
+			prod: {
+				files: [{
+          // TODO minification
+					expand: true,
+					cwd: cwd,
+					src: sassFiles,
+					dest: prodDir,
 					ext: '.css'
 				}]
 			}
@@ -116,5 +157,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-browserify');
 
 	grunt.registerTask('init:dev', ['clean:dev', 'copy:dev', 'sass:dev', 'jade:dev', 'browserify:dev']);
+	grunt.registerTask('init:prod', ['clean:prod', 'copy:prod', 'sass:prod', 'jade:prod', 'browserify:prod']);
 	grunt.registerTask('start:dev', ['init:dev', 'concurrent:dev']);
+	grunt.registerTask('start:prod', ['connect:prod']);
 };
