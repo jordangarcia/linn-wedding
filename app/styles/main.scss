@@ -7,6 +7,10 @@ $bg-color: white;
 $navbar-height: 60px;
 $navbar-link-color: black;
 
+$button-bg: #444;
+$button-hover-bg: #777;
+$button-color: white;
+
 @mixin sans-serif {
 	font-family: 'ProximaNova-Regular', sans-serif;
 }
@@ -209,6 +213,20 @@ h3 {
 .btn {
 	@include sans-serif;
 	text-transform: uppercase;
+	background: $button-bg;
+	line-height: 30px;
+	display: inline-block;
+	padding: 0 15px;
+	text-align: center;
+	color: $button-color;
+	@include border-radius(4px);
+	&:hover {
+		background-color: $button-hover-bg;
+	}
+}
+
+.find-flights-btn {
+	display: block;
 }
 
 .cover-photo {
@@ -261,7 +279,6 @@ section {
 	padding: $navbar-height 0 30px;
 	border-bottom: 1px solid #888;
 	@include box-shadow(0 2px 10px #aaa);
-
 }
 
 section.home {
@@ -348,6 +365,7 @@ section.subscribe {
 		border: 2px solid $btn-color;
 		border-radius: 4px;
 		transition: .5s;
+		text-transform: uppercase;
 
 		@media screen and (max-width: $screen-md-max) {
 			float: none;
