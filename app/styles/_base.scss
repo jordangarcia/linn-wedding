@@ -47,6 +47,12 @@
 @media only screen and (max-width: $screen-xs-max) {
 	.container {
 		width: $screen-xs-min;
+		padding: 1.75em 0;
+
+		.columns {
+			margin-bottom: 1.75em;
+		}
+
 		@include grid-fixed($screen-xs-min, 16);
 	}
 }
