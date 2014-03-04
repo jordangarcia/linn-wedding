@@ -10,6 +10,7 @@ $navbar-link-color: black;
 $button-bg: #444;
 $button-hover-bg: #777;
 $button-color: white;
+$paragraph-color: #444;
 
 @mixin sans-serif {
 	font-family: 'ProximaNova-Regular', sans-serif;
@@ -19,7 +20,8 @@ $button-color: white;
 }
 @mixin paragraph {
 	@include serif;
-	font-size: 1.3em;
+	color: $paragraph-color;
+	font-size: 1.125em;
 	line-height: 1.5em;
 	font-weight: 400;
 	letter-spacing: 1px;
@@ -40,6 +42,7 @@ p {
 
 address {
 	@include paragraph;
+	font-size: 1.25em;
 }
 
 hr {
@@ -225,10 +228,6 @@ h3 {
 	}
 }
 
-.find-flights-btn {
-	display: block;
-}
-
 .cover-photo {
 	@include border-box;
 	min-height: 700px;
@@ -322,6 +321,7 @@ section.subscribe {
 
 	p {
 		padding-bottom: 1em;
+		color: white;
 	}
 
 	@media screen and (max-width: $screen-md-max) {
@@ -378,5 +378,13 @@ section.subscribe {
 			border-color: white;
 			cursor: pointer;
 		}
+	}
+}
+
+#travel {
+	text-align: center;
+	.btn {
+		display: block;
+		margin: 0.25em 0.5em;
 	}
 }
