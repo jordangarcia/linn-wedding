@@ -237,10 +237,6 @@ h3 {
 	background-size: cover;
 	padding-top: 80px;
 
-	@media screen and (max-width: $screen-md-max) {
-		min-height: 600px;
-	}
-
 	.container {
 		text-align: center;
 		color: white;
@@ -252,12 +248,6 @@ h3 {
 			letter-spacing: 10px;
 			font-weight: bold;
 			text-transform: uppercase;
-
-			.ampersand {
-				@media screen and (max-width: $screen-md-max) {
-					display: block;
-				}
-			}
 		}
 
 		h3 {
@@ -268,6 +258,19 @@ h3 {
 			color: white;
 			@include box-shadow(1px 1px 0 #888);
 			@include box-shadow(1px 1px 0 rgba(0,0,0,.3));
+		}
+	}
+
+	@media screen and (max-width: $screen-md-max) {
+		min-height: 600px;
+
+		.container {
+			margin-top: 42px;
+
+			.ampersand {
+				display: block;
+				padding-left: 64px;
+			}
 		}
 	}
 }
