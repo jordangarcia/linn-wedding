@@ -265,11 +265,19 @@ h3 {
 		min-height: 600px;
 
 		.container {
-			margin-top: 42px;
+			margin-top: -55px;
 
 			.ampersand {
 				display: block;
-				padding-left: 64px;
+			}
+
+			hr {
+				margin: 20px auto;
+				border: 0px transparent;
+			}
+
+			h3 {
+				margin-top: 180px;
 			}
 		}
 	}
