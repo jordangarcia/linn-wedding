@@ -290,6 +290,7 @@ section {
 	@include border-box();
 	background: $bg-color;
 	padding: $navbar-height 0 30px;
+	width: 100%;
 	border-bottom: 1px solid #888;
 	@include box-shadow(0 2px 10px #aaa);
 }

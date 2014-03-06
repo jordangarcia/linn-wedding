@@ -24,7 +24,7 @@ module.exports = function slideScroll(selector, opts) {
 
 		// set the zindex and position for proper stacking order
 		section.style.zIndex = --zIndex;
-		section.style.position = 'relative';
+		section.style.position = 'fixed';
 		//debugger;
 		//section.style.webkitTransition = '-webkit-transform: 40ms';
 
@@ -40,6 +40,8 @@ module.exports = function slideScroll(selector, opts) {
 		offset += height;
 		section.setAttribute(OFFSET_END, offset);
 	});
+
+	document.body.style.height = offset + 'px';
 
 	/**
 	 * @param {Integer} offset of the top of the viewport
@@ -64,15 +66,24 @@ module.exports = function slideScroll(selector, opts) {
 		}
 
 		var currentSection = sections[ind];
-		var next;
-		var translateY;
+		var offsetStart = currentSection.getAttribute(OFFSET_START);
+		var offsetEnd = currentSection.getAttribute(OFFSET_END);
+		var height = offsetEnd - offsetStart;
 
-		//console.log(scrollY, currentSection.id);
-		$translateY(currentSection, 0);
-		if (ind < sections.length - 1) {
-			translateY = currentSection.getAttribute(OFFSET_END) - scrollY;
-			$translateY(sections[ind+1], -translateY);
+		//sections.forEach(function(section) {
+			//if (section !== currentSection) {
+				//$translateY(section, 0);
+			//}
+		//});
+
+
+		console.log(scrollY, currentSection);
+		var translateY = scrollY - offsetStart;
+
+		if (translateY - 200 < height) {
+			translateY = height;
 		}
+		$translateY(currentSection, -translateY);
 	});
 
 	if (opts.linkSelector) {
