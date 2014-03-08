@@ -100,7 +100,7 @@ function scrollTo($sections, pos, dir) {
 	var height         = getSectionHeight(currentSection);
 	var translateY     = pos - currentSection.getAttribute(OFFSET_START);
 
-  unfuckify($sections, ind);
+	unfuckify($sections, ind);
 
 	if (dir === UP && translateY < 100) {
 		console.log(dir, 'engage')
@@ -110,36 +110,39 @@ function scrollTo($sections, pos, dir) {
 		translateY = height;
 	}
 
-  $translateY(currentSection, -translateY);
+	$translateY(currentSection, -translateY);
 }
 
 /**
  * Returns an event
  */
 function createOnScroll($sections) {
-  var lastScrollY = 0;
+	var lastScrollY = 0;
 
-  return function scrollHandler(event) {
-    var scrollY = window.scrollY;
-    var dir     = (lastScrollY > scrollY) ? UP : DOWN;
-    lastScrollY = scrollY;
+	return function scrollHandler(event) {
+		var scrollY = window.scrollY;
+		var dir     = (lastScrollY > scrollY) ? UP : DOWN;
+		lastScrollY = scrollY;
 
-    scrollTo($sections, scrollY, dir);
-  }
+		scrollTo($sections, scrollY, dir);
+	}
 }
 
 module.exports = function slideScroll(selector, opts) {
-  var $sections = $(selector);
-  init($sections);
-  $(document).on('scroll', createOnScroll($sections));
+	var $sections = $(selector);
+	init($sections);
+	$(document).on('scroll', createOnScroll($sections));
 
-	//if (opts.linkSelector) {
-		//Array.prototype.slice.call($qsa(opts.linkSelector)).forEach(function(node) {
-			//node.addEventListener('click', function(event) {
-				//sections.forEach(function(node) {
-					//$translateY(node, 0);
-				//});
-			//});
-		//});
-	//}
+	if (opts.linkSelector) {
+		$(opts.linkSelector).each(function(index, node) {
+			$(node).on('click', function(event) {
+				var $target = $(node.getAttribute('href'));
+				var currY = window.scrollY;
+				var targetY = $target[0].getAttribute(OFFSET_START);
+				var dir = (currY > targetY) ? DOWN : UP;
+
+				scrollTo($sections, targetY, dir);
+			});
+		});
+	}
 }
