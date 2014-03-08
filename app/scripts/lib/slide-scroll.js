@@ -1,4 +1,7 @@
-var $qsa = window.document.querySelectorAll.bind(window.document);
+var $ = require('jquery');
+
+var OFFSET_START = 'data-offset-start';
+var OFFSET_END   = 'data-offset-end';
 
 /**
  * shortcut method to translate an element
@@ -9,24 +12,46 @@ function $translateY(el, val) {
 	el.style.webkitTransform = 'translateY(' + val + 'px)';
 }
 
-module.exports = function slideScroll(selector, opts) {
-	opts = opts || {};
+/**
+ * @param {NodeList} sections
+ * @param {Integer} offset of the top of the viewport
+ * @return {Integer} index of the section the top of the viewport is over
+ */
+function getSectionInd($sections, offset) {
+	var ind = null;
+	$sections.each(function(index) {
+		if (
+			this.getAttribute(OFFSET_START) <= offset &&
+			this.getAttribute(OFFSET_END) > offset
+		) {
+			// save index
+			ind = index;
+			return false;
+		}
+	});
+	return ind;
+}
+
+/**
+ * Gets the height of section based on offsets
+ *
+ * @param {Node} section
+ */
+function getSectionHeight(section) {
+	return section.getAttribute(OFFSET_END) - section.getAttribute(OFFSET_START);
+}
+
+function init($sections) {
 	var offset         = 0;
 	var zIndex         = 1000;
 	var viewportHeight = window.innerHeight;
-	var OFFSET_START   = 'data-offset-start';
-	var OFFSET_END     = 'data-offset-end';
 
-	var sections = Array.prototype.slice.call($qsa(selector), 0);
-
-	sections.forEach(function(section) {
+	$sections.each(function(index, section) {
 		var height = section.offsetHeight;
 
-		// set the zindex and position for proper stacking order
+		// set the zIndex and position for proper stacking order
 		section.style.zIndex = --zIndex;
 		section.style.position = 'fixed';
-		//debugger;
-		//section.style.webkitTransition = '-webkit-transform: 40ms';
 
 		// each section must be at least the height of the viewport
 		if (height < viewportHeight) {
@@ -41,50 +66,51 @@ module.exports = function slideScroll(selector, opts) {
 		section.setAttribute(OFFSET_END, offset);
 	});
 
+	// fake the document body height since everythign is position fixed
 	document.body.style.height = offset + 'px';
+}
 
-	/**
-	 * @param {Integer} offset of the top of the viewport
-	 * @return {Integer} index of the section the top of the viewport is over
-	 */
-	function getSectionInd(offset) {
-		var section = sections.filter(function(node) {
-			return (
-				node.getAttribute(OFFSET_START) < offset &&
-				node.getAttribute(OFFSET_END) > offset
-			);
-		})[0];
-
-		return sections.indexOf(section);
-	}
-
-	document.addEventListener('scroll', function(event) {
-		var scrollY        = window.scrollY;
-		var ind            = getSectionInd(scrollY);
-		if (ind === -1) {
+function unfuckify($sections, currInd) {
+	// unfuckify other sections
+	$sections.each(function(sectionInd, section) {
+		if (sectionInd === currInd) {
 			return;
 		}
 
-		var currentSection = sections[ind];
-		var offsetStart = currentSection.getAttribute(OFFSET_START);
-		var offsetEnd = currentSection.getAttribute(OFFSET_END);
-		var height = offsetEnd - offsetStart;
-
-		//sections.forEach(function(section) {
-			//if (section !== currentSection) {
-				//$translateY(section, 0);
-			//}
-		//});
-
-
-		console.log(scrollY, currentSection);
-		var translateY = scrollY - offsetStart;
-
-		if (translateY - 200 < height) {
-			translateY = height;
+		if (sectionInd > currInd) {
+			$translateY(section, 0);
+		} else {
+			$translateY(section, -getSectionHeight(section));
 		}
-		$translateY(currentSection, -translateY);
 	});
+}
+
+var lastScrollY = 0;
+function onScroll(event) {
+	var scrollY        = window.scrollY;
+	var ind            = getSectionInd(scrollY);
+	var dir            = (lastScrollY > scrollY) ? 'up' : 'down';
+	lastScrollY        = scrollY;
+	var currentSection = sections[ind];
+	var height         = getSectionHeight(currentSection);
+
+
+	var translateY = scrollY - offsetStart;
+
+	if (dir === 'up' && translateY < 100) {
+		console.log(dir, 'engage')
+		translateY = 0;
+	} else if (dir === 'down' && height - translateY < 100) {
+		console.log(dir, 'engage')
+		translateY = height;
+	}
+
+	$translateY(currentSection, -translateY);
+}
+
+module.exports = function slideScroll(selector, opts) {
+	var sections = $qsa
+	document.addEventListener('scroll', onScroll);
 
 	if (opts.linkSelector) {
 		Array.prototype.slice.call($qsa(opts.linkSelector)).forEach(function(node) {
