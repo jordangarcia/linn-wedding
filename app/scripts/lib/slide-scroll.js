@@ -2,6 +2,8 @@ var $ = require('jquery');
 
 var OFFSET_START = 'data-offset-start';
 var OFFSET_END   = 'data-offset-end';
+var UP           = 'up';
+var DOWN         = 'down';
 
 /**
  * shortcut method to translate an element
@@ -85,40 +87,59 @@ function unfuckify($sections, currInd) {
 	});
 }
 
-var lastScrollY = 0;
-function onScroll(event) {
-	var scrollY        = window.scrollY;
-	var ind            = getSectionInd(scrollY);
-	var dir            = (lastScrollY > scrollY) ? 'up' : 'down';
-	lastScrollY        = scrollY;
-	var currentSection = sections[ind];
+
+/**
+ * Scrolls to a position on the page
+ *
+ * @param {Integer} pos
+ * @param {UP|DOWN} dir
+ */
+function scrollTo($sections, pos, dir) {
+	var ind            = getSectionInd($sections, pos);
+	var currentSection = $sections[ind];
 	var height         = getSectionHeight(currentSection);
+	var translateY     = pos - currentSection.getAttribute(OFFSET_START);
 
+  unfuckify($sections, ind);
 
-	var translateY = scrollY - offsetStart;
-
-	if (dir === 'up' && translateY < 100) {
+	if (dir === UP && translateY < 100) {
 		console.log(dir, 'engage')
 		translateY = 0;
-	} else if (dir === 'down' && height - translateY < 100) {
+	} else if (dir === DOWN && height - translateY < 100) {
 		console.log(dir, 'engage')
 		translateY = height;
 	}
 
-	$translateY(currentSection, -translateY);
+  $translateY(currentSection, -translateY);
+}
+
+/**
+ * Returns an event
+ */
+function createOnScroll($sections) {
+  var lastScrollY = 0;
+
+  return function scrollHandler(event) {
+    var scrollY = window.scrollY;
+    var dir     = (lastScrollY > scrollY) ? UP : DOWN;
+    lastScrollY = scrollY;
+
+    scrollTo($sections, scrollY, dir);
+  }
 }
 
 module.exports = function slideScroll(selector, opts) {
-	var sections = $qsa
-	document.addEventListener('scroll', onScroll);
+  var $sections = $(selector);
+  init($sections);
+  $(document).on('scroll', createOnScroll($sections));
 
-	if (opts.linkSelector) {
-		Array.prototype.slice.call($qsa(opts.linkSelector)).forEach(function(node) {
-			node.addEventListener('click', function(event) {
-				sections.forEach(function(node) {
-					$translateY(node, 0);
-				});
-			});
-		});
-	}
+	//if (opts.linkSelector) {
+		//Array.prototype.slice.call($qsa(opts.linkSelector)).forEach(function(node) {
+			//node.addEventListener('click', function(event) {
+				//sections.forEach(function(node) {
+					//$translateY(node, 0);
+				//});
+			//});
+		//});
+	//}
 }
