@@ -1,9 +1,45 @@
 var $ = require('jquery');
+var debounce = require('underscore').debounce;
 
 var OFFSET_START = 'data-offset-start';
 var OFFSET_END   = 'data-offset-end';
-var UP           = 'up';
-var DOWN         = 'down';
+
+var DEFAULTS = {
+	linkSelector: null
+};
+
+/**
+ * Main method
+ */
+function main(selector, opts) {
+	var opts      = $.extend(true, {}, DEFAULTS, opts);
+	var $sections = $(selector);
+
+	calculateOffsets($sections);
+
+	$(document).on('scroll', function(event) {
+		scrollTo($sections, Math.max(window.scrollY, 0));
+	});
+
+	// debounce offset calculation handler
+	handleResize = debounce(function() {
+		console.log('hey');
+		calculateOffsets($sections);
+	}, 300);
+
+	$(window).on('resize', handleResize);
+
+	if (opts.linkSelector) {
+		$(opts.linkSelector).each(function(index, node) {
+			$(node).on('click', function(event) {
+				var $target = $(node.getAttribute('href'));
+				var targetY = $target[0].getAttribute(OFFSET_START);
+
+				scrollTo($sections, targetY);
+			});
+		});
+	}
+}
 
 /**
  * shortcut method to translate an element
@@ -17,6 +53,7 @@ function $translateY(el, val) {
 /**
  * @param {NodeList} sections
  * @param {Integer} offset of the top of the viewport
+ *
  * @return {Integer} index of the section the top of the viewport is over
  */
 function getSectionInd($sections, offset) {
@@ -43,7 +80,8 @@ function getSectionHeight(section) {
 	return section.getAttribute(OFFSET_END) - section.getAttribute(OFFSET_START);
 }
 
-function init($sections) {
+function calculateOffsets($sections) {
+	console.log('calc offset');
 	var offset         = 0;
 	var zIndex         = 1000;
 	var viewportHeight = window.innerHeight;
@@ -92,57 +130,15 @@ function unfuckify($sections, currInd) {
  * Scrolls to a position on the page
  *
  * @param {Integer} pos
- * @param {UP|DOWN} dir
  */
-function scrollTo($sections, pos, dir) {
+function scrollTo($sections, pos) {
 	var ind            = getSectionInd($sections, pos);
 	var currentSection = $sections[ind];
 	var height         = getSectionHeight(currentSection);
 	var translateY     = pos - currentSection.getAttribute(OFFSET_START);
 
 	unfuckify($sections, ind);
-
-	if (dir === UP && translateY < 100) {
-		console.log(dir, 'engage')
-		translateY = 0;
-	} else if (dir === DOWN && height - translateY < 100) {
-		console.log(dir, 'engage')
-		translateY = height;
-	}
-
 	$translateY(currentSection, -translateY);
 }
 
-/**
- * Returns an event
- */
-function createOnScroll($sections) {
-	var lastScrollY = 0;
-
-	return function scrollHandler(event) {
-		var scrollY = window.scrollY;
-		var dir     = (lastScrollY > scrollY) ? UP : DOWN;
-		lastScrollY = scrollY;
-
-		scrollTo($sections, scrollY, dir);
-	}
-}
-
-module.exports = function slideScroll(selector, opts) {
-	var $sections = $(selector);
-	init($sections);
-	$(document).on('scroll', createOnScroll($sections));
-
-	if (opts.linkSelector) {
-		$(opts.linkSelector).each(function(index, node) {
-			$(node).on('click', function(event) {
-				var $target = $(node.getAttribute('href'));
-				var currY = window.scrollY;
-				var targetY = $target[0].getAttribute(OFFSET_START);
-				var dir = (currY > targetY) ? DOWN : UP;
-
-				scrollTo($sections, targetY, dir);
-			});
-		});
-	}
-}
+module.exports = main;
