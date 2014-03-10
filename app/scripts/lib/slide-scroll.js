@@ -35,9 +35,7 @@ function main(selector, opts) {
 			$(node).on('click', function(event) {
 				var $target = $(node.getAttribute('href'));
 				var targetY = $target[0].getAttribute(OFFSET_START);
-
-				debugger;
-				scrollTo($sections, targetY);
+				$(document).scrollTop(targetY);
 			});
 		});
 	}
