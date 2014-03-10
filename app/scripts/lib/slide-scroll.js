@@ -1,4 +1,5 @@
 var $ = require('jquery');
+var prefixed = require('prefixed');
 var debounce = require('underscore').debounce;
 
 var OFFSET_START = 'data-offset-start';
@@ -14,6 +15,7 @@ var DEFAULTS = {
 function main(selector, opts) {
 	var opts      = $.extend(true, {}, DEFAULTS, opts);
 	var $sections = $(selector);
+	var scrollTo  = createScrollTo();
 
 	calculateOffsets($sections);
 
@@ -23,7 +25,6 @@ function main(selector, opts) {
 
 	// debounce offset calculation handler
 	handleResize = debounce(function() {
-		console.log('hey');
 		calculateOffsets($sections);
 	}, 300);
 
@@ -35,6 +36,7 @@ function main(selector, opts) {
 				var $target = $(node.getAttribute('href'));
 				var targetY = $target[0].getAttribute(OFFSET_START);
 
+				debugger;
 				scrollTo($sections, targetY);
 			});
 		});
@@ -47,7 +49,7 @@ function main(selector, opts) {
  * @param {Integer} val pixel value to translate
  */
 function $translateY(el, val) {
-	el.style.webkitTransform = 'translateY(' + val + 'px)';
+	prefixed(el.style, 'transform', 'translateY(' + val + 'px)');
 }
 
 /**
@@ -80,8 +82,12 @@ function getSectionHeight(section) {
 	return section.getAttribute(OFFSET_END) - section.getAttribute(OFFSET_START);
 }
 
+/**
+ * Calculates the offset start and end for each section
+ *
+ * @param {jQuery} $sections
+ */
 function calculateOffsets($sections) {
-	console.log('calc offset');
 	var offset         = 0;
 	var zIndex         = 1000;
 	var viewportHeight = window.innerHeight;
@@ -110,6 +116,13 @@ function calculateOffsets($sections) {
 	document.body.style.height = offset + 'px';
 }
 
+/**
+ * Ensures that sections above the current are hidden and sections below
+ * are not being translated
+ *
+ * @param {jQuery} $sections
+ * @param {Integer} currInd
+ */
 function unfuckify($sections, currInd) {
 	// unfuckify other sections
 	$sections.each(function(sectionInd, section) {
@@ -125,20 +138,30 @@ function unfuckify($sections, currInd) {
 	});
 }
 
-
 /**
- * Scrolls to a position on the page
+ * Creates a scrollTo function with a closure around remembering
+ * the last section index
  *
- * @param {Integer} pos
+ * @return {Function}
  */
-function scrollTo($sections, pos) {
-	var ind            = getSectionInd($sections, pos);
-	var currentSection = $sections[ind];
-	var height         = getSectionHeight(currentSection);
-	var translateY     = pos - currentSection.getAttribute(OFFSET_START);
+function createScrollTo() {
+	var lastSectionInd;
+	/**
+	 * Scrolls to a position on the page
+	 *
+	 * @param {Integer} pos
+	 */
+	return function scrollTo($sections, pos) {
+		var ind            = getSectionInd($sections, pos);
+		var currentSection = $sections[ind];
+		var translateY     = pos - currentSection.getAttribute(OFFSET_START);
 
-	unfuckify($sections, ind);
-	$translateY(currentSection, -translateY);
+		if (lastSectionInd !== ind) {
+			unfuckify($sections, ind);
+		}
+		lastSectionInd = ind;
+		$translateY(currentSection, -translateY);
+	}
 }
 
 module.exports = main;
