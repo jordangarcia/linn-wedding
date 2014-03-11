@@ -128,6 +128,16 @@ module.exports = function(grunt) {
 				}]
 			}
 		},
+		uglify: {
+			prod: {
+				files: [
+					{
+						src: prodDir + 'scripts/main.js',
+						dest: prodDir + 'scripts/main.js'
+					}
+				]
+			}
+		},
 		watch: {
 			options: {
 				cwd: cwd,
@@ -161,12 +171,13 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-jade');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-concurrent');
 	grunt.loadNpmTasks('grunt-browserify');
 	grunt.loadNpmTasks('grunt-shell');
 
 	grunt.registerTask('init:dev', ['clean:dev', 'copy:dev', 'sass:dev', 'jade:dev', 'browserify:dev']);
-	grunt.registerTask('init:prod', ['clean:prod', 'copy:prod', 'sass:prod', 'jade:prod', 'browserify:prod']);
+	grunt.registerTask('init:prod', ['clean:prod', 'copy:prod', 'sass:prod', 'jade:prod', 'browserify:prod', 'uglify:prod']);
 	grunt.registerTask('start:dev', ['init:dev', 'concurrent:dev']);
 	grunt.registerTask('start:prod', ['connect:prod']);
 
