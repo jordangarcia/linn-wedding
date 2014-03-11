@@ -51,14 +51,6 @@ module.exports = function(grunt) {
 					keepalive: true,
 					base: devDir
 				}
-			},
-			prod: {
-				options: {
-					hostname: '0.0.0.0',
-					port: process.env['PORT'] || prodPort,
-					keepalive: true,
-					base: prodDir
-				}
 			}
 		},
 		browserify: {
@@ -170,7 +162,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('init:dev', ['clean:dev', 'copy:dev', 'sass:dev', 'jade:dev', 'browserify:dev']);
 	grunt.registerTask('init:prod', ['clean:prod', 'copy:prod', 'sass:prod', 'jade:prod', 'browserify:prod', 'uglify:prod']);
 	grunt.registerTask('start:dev', ['init:dev', 'concurrent:dev']);
-	grunt.registerTask('start:prod', ['connect:prod']);
 
 	grunt.registerTask('heroku', ['init:prod']);
 };
