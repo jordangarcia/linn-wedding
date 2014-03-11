@@ -6,10 +6,7 @@
  * imagesLoaded('img').then(doStuff)
  *
  */
-var Q = require('../../bower_components/q/q.js');
-
-// shortcut to QSA
-var $QSA = window.document.querySelectorAll.bind(window.document);
+var $ = require('jquery');
 
 /**
  * Binds the image 'load' & 'error' event listener
@@ -18,7 +15,7 @@ var $QSA = window.document.querySelectorAll.bind(window.document);
  * @return {Promise}
  */
 function bindImgListener(node) {
-	var deferred = Q.defer();
+	var deferred = $.Deferred();
 
 	node.addEventListener('load', function() {
 		deferred.resolve(this);
@@ -27,11 +24,11 @@ function bindImgListener(node) {
 		deferred.resolve(this);
 	});
 
-	return deferred.promise;
+	return deferred.promise();
 }
 
 module.exports = function imagesLoaded(selector) {
-	var deferred = Q.defer();
+	var deferred = $.Deferred();
 	var resolve = function() {
 		deferred.resolve();
 	};
@@ -41,12 +38,14 @@ module.exports = function imagesLoaded(selector) {
 
 	document.addEventListener('DOMContentLoaded', function(event) {
 		var deferredImages = [];
-		Array.prototype.forEach.call($QSA(selector), function(node) {
+
+		$(selector).each(function(index, node) {
 			deferredImages.push(bindImgListener(node));
 		});
+
 		// when all images are resolved, resolve the promise
-		Q.all(deferredImages).then(resolve, reject);
+		$.when.apply(null, deferredImages).then(resolve, reject);
 	});
 
-	return deferred.promise;
+	return deferred.promise();
 };
