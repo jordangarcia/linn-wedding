@@ -61,14 +61,6 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		shell: {
-			bower_install: {
-				options: {
-					stdout: true
-				},
-				command: './node_modules/bower/bin/bower install --allow-root'
-			}
-		},
 		browserify: {
 			dev: {
 				src: MAIN_SCRIPT,
@@ -174,12 +166,11 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-concurrent');
 	grunt.loadNpmTasks('grunt-browserify');
-	grunt.loadNpmTasks('grunt-shell');
 
 	grunt.registerTask('init:dev', ['clean:dev', 'copy:dev', 'sass:dev', 'jade:dev', 'browserify:dev']);
 	grunt.registerTask('init:prod', ['clean:prod', 'copy:prod', 'sass:prod', 'jade:prod', 'browserify:prod', 'uglify:prod']);
 	grunt.registerTask('start:dev', ['init:dev', 'concurrent:dev']);
 	grunt.registerTask('start:prod', ['connect:prod']);
 
-	grunt.registerTask('heroku', ['shell:bower_install', 'init:prod']);
+	grunt.registerTask('heroku', ['init:prod']);
 };
