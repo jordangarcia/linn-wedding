@@ -2,8 +2,8 @@ var $ = require('jquery');
 var prefixed = require('prefixed');
 var debounce = require('underscore').debounce;
 
-var OFFSET_START = 'data-offset-start';
-var OFFSET_END   = 'data-offset-end';
+var OFFSET_START = 'offsetStart';
+var OFFSET_END   = 'offsetEnd';
 
 var DEFAULTS = {
 	linkSelector: null
@@ -19,7 +19,7 @@ function main(selector, opts) {
 
 	calculateOffsets($sections);
 
-	$(document).on('scroll', function(event) {
+	$(window).on('scroll', function(event) {
 		scrollTo($sections, Math.max(window.scrollY, 0));
 	});
 
@@ -33,9 +33,11 @@ function main(selector, opts) {
 	if (opts.linkSelector) {
 		$(opts.linkSelector).each(function(index, node) {
 			$(node).on('click', function(event) {
-				var $target = $(node.getAttribute('href'));
-				var targetY = $target[0].getAttribute(OFFSET_START);
-				$(document).scrollTop(targetY);
+				// get the synthetic offset top of the targeted element
+				var scrollY = $(node.getAttribute('href')).data(OFFSET_START);
+				// $(window).scrollTop() leads to inconsistent window.scrollY values
+				window.scrollTo(0, scrollY);
+				scrollTo($sections, scrollY);
 			});
 		});
 	}
@@ -59,9 +61,10 @@ function $translateY(el, val) {
 function getSectionInd($sections, offset) {
 	var ind = null;
 	$sections.each(function(index) {
+		var $this = $(this);
 		if (
-			this.getAttribute(OFFSET_START) <= offset &&
-			this.getAttribute(OFFSET_END) > offset
+			$this.data(OFFSET_START) <= offset &&
+			$this.data(OFFSET_END) > offset
 		) {
 			// save index
 			ind = index;
@@ -77,7 +80,8 @@ function getSectionInd($sections, offset) {
  * @param {Node} section
  */
 function getSectionHeight(section) {
-	return section.getAttribute(OFFSET_END) - section.getAttribute(OFFSET_START);
+	var $section = $(section);
+	return $section.data(OFFSET_END) - $section.data(OFFSET_START);
 }
 
 /**
@@ -91,6 +95,7 @@ function calculateOffsets($sections) {
 	var viewportHeight = window.innerHeight;
 
 	$sections.each(function(index, section) {
+		var $section = $(section);
 		var height = section.offsetHeight;
 
 		// set the zIndex and position for proper stacking order
@@ -104,10 +109,10 @@ function calculateOffsets($sections) {
 		}
 
 		// attach the offset start and offset end to node
-		section.setAttribute(OFFSET_START, offset);
+		$section.data(OFFSET_START, offset);
 		// increment the entire offset
 		offset += height;
-		section.setAttribute(OFFSET_END, offset);
+		$section.data(OFFSET_END, offset);
 	});
 
 	// fake the document body height since everythign is position fixed
@@ -131,6 +136,7 @@ function unfuckify($sections, currInd) {
 		if (sectionInd > currInd) {
 			$translateY(section, 0);
 		} else {
+			// if the section is above hide it upwards
 			$translateY(section, -getSectionHeight(section));
 		}
 	});
@@ -152,7 +158,7 @@ function createScrollTo() {
 	return function scrollTo($sections, pos) {
 		var ind            = getSectionInd($sections, pos);
 		var currentSection = $sections[ind];
-		var translateY     = pos - currentSection.getAttribute(OFFSET_START);
+		var translateY     = pos - $(currentSection).data(OFFSET_START);
 
 		if (lastSectionInd !== ind) {
 			unfuckify($sections, ind);
