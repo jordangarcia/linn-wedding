@@ -8,9 +8,12 @@ $navbar-height: 60px;
 $navbar-link-color: black;
 
 $button-bg: #444;
-$button-hover-bg: #777;
+$button-hover-bg: darken($button-bg, 10%);
 $button-color: white;
 $paragraph-color: #444;
+$link-color: darken($paragraph-color, 5%);
+$link-hover-color: #000;
+$form-bg: #444;
 
 @mixin sans-serif {
 	font-family: 'ProximaNova-Regular', sans-serif;
@@ -31,9 +34,19 @@ $paragraph-color: #444;
 		letter-spacing: 0;
 	}
 }
+
 body {
-	color: #181818;
 	@include sans-serif;
+}
+
+a {
+	color: $link-color;
+	text-decoration: underline;
+	outline: 0;
+
+	&:hover {
+		color: $link-hover-color;
+	}
 }
 
 p {
@@ -42,7 +55,7 @@ p {
 
 address {
 	@include paragraph;
-	font-size: 1.25em;
+	font-size: 1.25
 }
 
 hr {
@@ -94,6 +107,10 @@ h3 {
 		}
 	}
 
+	a {
+		text-decoration: none;
+	}
+
 	.show-menu {
 		display: none;
 	}
@@ -107,7 +124,7 @@ h3 {
 			height: $navbar-height;
 			padding: 20px 20px;
 			float: left;
-			width: 25%;
+			width: 20%;
 			text-align: center;
 
 			a {
@@ -195,7 +212,7 @@ h3 {
 
 		&.menu-showing {
 			ul {
-				height: 160px;
+				height: 200px;
 				@include box-shadow(0 3px 3px 0 rgba(0,0,0,.3));
 			}
 
@@ -216,6 +233,7 @@ h3 {
 .btn {
 	@include sans-serif;
 	text-transform: uppercase;
+	text-decoration: none;
 	background: $button-bg;
 	line-height: 30px;
 	display: inline-block;
@@ -225,6 +243,7 @@ h3 {
 	@include border-radius(4px);
 	&:hover {
 		background-color: $button-hover-bg;
+		color: $button-color;
 	}
 }
 
@@ -318,11 +337,10 @@ section.venue {
 }
 
 section.subscribe {
-	background: #333;
+	background: darken($form-bg, 11%);
 }
 
 .subscribe-form {
-	$form-bg: #444;
 	margin-top: 150px;
 	padding: 40px;
 	background: $form-bg;
@@ -348,50 +366,45 @@ section.subscribe {
 		}
 	}
 
+	input {
+		border-radius: 4px;
+		padding: 6px 12px;
+		font-size: 14px;
+		border-width: 1px;
+		line-height: 1.5em;
+		vertical-align: middle;
+		display: inline-block;
+	}
 
 	input[type="email"] {
-		font-size: 14px;
-		padding: 5px;
-		display: block;
 		overflow: hidden;
 		width: 80%;
-		float: left;
-		border-width: 2px;
 		@include border-box;
+
 		@media screen and (max-width: $screen-md-max) {
-			margin: 1em 0;
-			float: none;
+			margin: 0 0 1em 0;
 			display: block;
 			width: 100%;
 		}
 	}
 
 	input[type="submit"] {
-		$btn-color: #CCC;
-		float: right;
-		width: 100px;
+		margin-left: 7px;
 		background: white;
-		border: none;
 		width: 15%;
-		font-size: 14px;
-		padding: 5px;
-		border-width: 2px;
-		background-color: $btn-color;
-		border: 2px solid $btn-color;
+		background-color: lighten($form-bg, 30%);
 		border-radius: 4px;
-		transition: .5s;
 		text-transform: uppercase;
 
-		@media screen and (max-width: $screen-md-max) {
-			float: none;
-			display: block;
-			width: 100%;
+		&:hover {
+			background: lighten($form-bg, 40%);
+			cursor: pointer;
 		}
 
-		&:hover {
-			background: white;
-			border-color: white;
-			cursor: pointer;
+		@media screen and (max-width: $screen-md-max) {
+			margin: 0 0 1em 0;
+			display: block;
+			width: 100%;
 		}
 	}
 }
@@ -402,4 +415,13 @@ section.subscribe {
 		display: block;
 		margin: 0.25em 0.5em;
 	}
+}
+
+.registry-link {
+	@include serif;
+	display: block;
+	padding: 0.75em;
+	white-space: nowrap;
+	font-size: 2.5em;
+	text-align: center;
 }

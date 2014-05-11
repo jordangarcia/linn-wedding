@@ -22,6 +22,8 @@ html(lang="en")
 				li
 					a(href='#travel', class='scroll-link') Travel
 				li
+					a(href='#registry', class='scroll-link') Registry
+				li
 					a(href='#subscribe', class='scroll-link') Stay Updated
 		section.home
 			div.cover-photo(style='background-image: url(/img/cover.jpg)')
@@ -133,6 +135,21 @@ html(lang="en")
 						You can also walk, cab, take
 						<a href="http://www.bart.gov/stations" target="_blank">BART</a> or
 						ride <a href="http://www.sfmta.com/getting-around/transit" target="_blank">Muni</a>.
+
+		section.registry#registry
+			div.container
+				div.sixteen.columns
+					h2.section-title Registry
+					ul
+						li
+							a.registry-link.zola(href='https://www.zola.com/registry/jillianandlogan', target='_blank') Zola
+						li
+							a.registry-link.cb(href='http://www.crateandbarrel.com/Gift-Registry/Jillian-Sullivan-and-Logan-Linn/r5143605', target='_blank') Crate&Barrel
+						li
+							a.registry-link.amazon(href='http://www.amazon.com/registry/wedding/2CDRFJAI33T56', target='_blank') Amazon
+						li
+							a.registry-link.macys(href='http://www1.macys.com/registry/wedding/guest/?registryId=6170091', target='_blank') Macy's
+
 		section.subscribe#subscribe
 			div.container
 				div.sixteen.columns
@@ -142,7 +159,7 @@ html(lang="en")
 							We're working hard to make sure you have all the information you
 							need. To receive an email update when we add more to the website,
 							enter your email address below.
-						input(type='email', name='EMAIL', placeholder='Your email address')
+						input(type='email', name='EMAIL', placeholder='Your email address', required=true)
 						input(type='text', name='b_e19cf1ba682140c2796b60122_89d06e7e1c', value='', style='position: absolute; left: -5000px;')
 						input(type='submit', value='Subscribe')
 		script (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-45175569-2', 'jillianandlogan.com'); ga('send', 'pageview');
